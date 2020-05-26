@@ -1,9 +1,9 @@
 # speedtest
 Run speedtest for Zabbix in a container. 
 
-One cycle of speedtest-cli takes about 25 seconds. Most obvious solution would be to run speedtest-cli as a UserParameter from the Zabbix agent. This however is not ideal as duringthis time, the agent process is waiting. In order to make this work, agent configuration ZBX_TIMEOUT has to be increased 3 seconds (=default) to 30 seconds. Same also on the Zabbix server.
+One cycle of speedtest-cli takes about 25 seconds. Most obvious solution would be, to run speedtest-cli as a UserParameter from the Zabbix agent. This however is not ideal as during this time, the agent process is waiting. In order to make it work, the agent configuration ZBX_TIMEOUT has to be increased from 3 seconds (=default) to 30 seconds. Same also on the Zabbix server.
 
-To avoid such a big increase on the timeouts, I propose to run the speedtest-cli in a seperate container and have the output shared withthe Zabbix agent. This way, Ißm still using a UserParameter but this time only to get the content of the last run into a text parameter which then gets split into the relevant properties to be monitored.
+To avoid such a big increase on the timeout, I propose to run the speedtest-cli in a seperate container and have the output shared with the Zabbix agent. This way, I'm still using a UserParameter but now only to get the content of the last run into a text parameter which then gets split into the relevant properties to be monitored.
 
 # What is Zabbix?
 Zabbix is an enterprise-class open source distributed monitoring solution that monitors numerous parameters of a network and the health and integrity of servers.
