@@ -41,5 +41,5 @@ $ sudo docker container run -it --rm --name speedtest-cron \
   -e STC_FILE_NAME="speedtest.json" \
 tomychr/speedtest-cron:latest
 ```
-To be finished
+To be finished later
 
