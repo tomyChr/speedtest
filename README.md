@@ -34,12 +34,37 @@ More convenient is to get it from DockerHub
 Start a speedtest-cron container as follows:
 
 ```console
-$ sudo docker container run -it --rm --name speedtest-cron \
+$ sudo docker container run -it --name speedtest-cron \
   -v /volume1/docker/speedtest/data:/data/speedtest:rw \
   -e STC_INTERVAL="10" \
   -e STC_FORMAT="json" \
   -e STC_FILE_NAME="speedtest.json" \
 tomychr/speedtest-cron:latest
 ```
-To be finished later
+
+## Environment Variables
+
+When you start the `speedtest-cron` image, you can adjust the configuration of speedtest by passing one or more environment variables on the `docker run` command line.
+
+### `STC_INTERVAL`
+
+This variable defines the intervall in minutes at which speedtest should run. The default is every `10` minutes.
+
+### `STC_FORMAT`
+
+This variable specifies the the output format of the. Allowed values are listed below:
+- ``json`` - outputs only basic information in JSON format. Speeds listed in bit/s;
+- ``csv`` - outputs only basic information in CSV format. Speeds listed in bit/s;
+The default is ``json``.
+
+### `STC_FILE_NAME`
+
+Specifies the filename to which the output of speedtest is written to. The default is ``speedtest.json``.
+
+## Allowed volumes for the speedtest container
+
+### ``/data/speedtest``
+
+The volume is where the output after each speedtest run is stored.
+
 
