@@ -46,9 +46,12 @@ ENV STC_FILE_NAME="speedtest.json"
 # Define volume for output
 VOLUME [ "/data/speedtest" ]
 
+# ENTRYPOINT ["/sbin/tini", "--", "/usr/bin/docker-entrypoint.sh"]
+
 # Change from root to normal user
 USER usr_speedtest
 
 # 
 CMD [ "/usr/src/app/setup_cron.sh" ]
 
+# CMD ["/usr/sbin/zabbix_agentd", "--foreground", "-c", "/etc/zabbix/zabbix_agentd.conf"]
