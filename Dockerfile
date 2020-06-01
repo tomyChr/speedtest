@@ -1,20 +1,32 @@
 # spedtest-cli in a docker container with cron
 FROM python:3-alpine
 
-LABEL org.opencontainers.image.title="speedtest-cron" \
-      org.opencontainers.image.authors="Thomas Christen <thomas.christen@active.ch>" \
-      org.opencontainers.image.vendor="" \
-      org.opencontainers.image.url="" \
-      org.opencontainers.image.description="spedtest-cli in a docker container with cron" \
-      org.opencontainers.image.licenses="GPL v2.0"
+LABEL maintainer="thomas.christen@active.ch"
+
+# args for building the container
+ARG BUILD_DATE
+ARG BUILD_VERSION
+ARG VSC_REF
+
+
+LABEL org.label-schema.schema-version="1.0" \
+      org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.name="tomychr/speedtest-cron" \
+      org.label-schema.description="spedtest-cli in a docker container with cron" \
+      org.label-schema.vsc-url="https://github.com/tomyChr/speedtest-cron" \
+      org.label-schema.vsc-ref=$VSC_REF \
+      org.label-schema.version=$BUILD_VERSION \
+      org.label-schema.docker.cmd="docker container run -it --name speedtest-cron -v /volume1/docker/speedtest/data:/data/speedtest:rw -e STC_INTERVAL="10" -e STC_FORMAT="json" -e STC_FILE_NAME="speedtest.json" tomychr/speedtest-cron:latest"
 
 STOPSIGNAL SIGTERM
 
-# Define a new group and add a new user
-RUN addgroup -S grp_speedtest && adduser -H -D -S usr_speedtest -G grp_speedtest
-
-#Set the current directory
+# Set the current directory
 WORKDIR /usr/src/app
+
+# Define a new group and add a new user
+RUN addgroup -S grp_speedtest \
+    && adduser -H -D -S usr_speedtest -G grp_speedtest \
+    && chown -R usr_speedtest:grp_speedtest /usr/src/app
 
 # Install core components
 RUN pip install speedtest-cli \
@@ -53,5 +65,3 @@ USER usr_speedtest
 
 # 
 CMD [ "/usr/src/app/setup_cron.sh" ]
-
-# CMD ["/usr/sbin/zabbix_agentd", "--foreground", "-c", "/etc/zabbix/zabbix_agentd.conf"]

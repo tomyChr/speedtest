@@ -11,6 +11,7 @@ else
 # This extra line makes it a valid cron" > crontab.txt
     else
         echo "[Error] Unsupported 'STC_FORMAT' '$STC_FORMAT' for output format. Has to be either 'json' or 'csv'"
+        exit 1
     fi
 fi
 

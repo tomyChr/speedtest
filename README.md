@@ -22,7 +22,7 @@ For more information and related downloads for speedtest-cli components, please 
 If the version on DockerHub is not suitable or outdated, get the sources from this repository and apply changes as needed. Finally build the image.
 
 ```console
-$ sudo docker build --tag speedtest-cron:1.1 .
+$ bash build.sh
 ```
 
 ## Download docker images
